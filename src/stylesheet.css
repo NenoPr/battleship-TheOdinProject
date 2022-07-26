@@ -1,0 +1,67 @@
+
+
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+#container {
+    display: grid;
+    grid-template: auto 1fr / 1fr;
+    gap: 4rem;
+    justify-items: center;
+}
+
+#title-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+#title-description {
+    width: 50%;
+    text-align: center;
+}
+
+#title {
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+#game-container {
+    grid-area: 2 / 1 / 3 / 2;
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+    gap: .2rem;
+}
+
+#player-1-map {
+    display: grid;
+    grid-template: repeat(10, auto) / repeat(10, auto);
+    height: fit-content;
+    width: fit-content;
+    gap: .2rem;
+}
+
+#separator {
+    width: 3rem;
+    background-color: rgb(26, 161, 245);
+}
+
+#player-2-map {
+    display: grid;
+    grid-template: repeat(10, auto) / repeat(10, auto);
+    height: fit-content;
+    width: fit-content;
+    gap: .2rem;
+}
+
+.game-hit-box {
+    height: 3rem;
+    width: 3rem;
+    background-color: rgb(33, 147, 185);
+    border: .2rem solid gray;
+}
