@@ -1,7 +1,12 @@
-import { populateDOMwithPlayArea } from './DOMcode.js'
+import { populateDOMwithPlayArea, playerTurn, playerPopulateShips } from './DOMcode.js'
 import { shipFactory, gameBoard, Player } from './objects.js'
 
 function mainGameLoop() {
+
+    let player1 = createPlayers("Player 1")
+    let player2 = createPlayers("Player 2")
+
+    player2 = playerPopulateShips(player1, player2)
 
 
 
@@ -19,17 +24,23 @@ function createPlayers(newPlayerName) {
     return newPlayer
 }
 
-function initializeGame () {
+function initializeGame (player1, player2) {
 
-    let player1 = createPlayers("Player 1")
-    let player2 = createPlayers("Player 2")
     populateDOMwithPlayArea(document, player1, player2)
-    player1.playerGameBoard.placeShips([20,21,22,23], player1)
-    console.log("player1",player1)
+
+    player2.playerGameBoard.placeShips("carrier",[0,0,0,0,0], true)
+    player2.playerGameBoard.placeShips("battleship",[0,0,0,0], true)
+    player2.playerGameBoard.placeShips("cruiser",[0,0,0], true)
+    player2.playerGameBoard.placeShips("destroyer",[0,0], true)
+    player2.playerGameBoard.placeShips("submarine",[0,0], true)
     console.log("player2",player2)
+
+    return player2
 
 
 
 }
 
-initializeGame()
+mainGameLoop()
+
+export { initializeGame }

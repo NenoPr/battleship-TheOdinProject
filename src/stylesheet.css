@@ -11,6 +11,8 @@ html, body {
     grid-template: auto 1fr / 1fr;
     gap: 4rem;
     justify-items: center;
+    background-color: rgb(101, 101, 101);
+    min-height: 100vh;
 }
 
 #title-info {
@@ -46,6 +48,14 @@ html, body {
     gap: .2rem;
 }
 
+.remove-events {
+    pointer-events: none;
+}
+
+.players-turn {
+    pointer-events: none;
+}
+
 #separator {
     width: 3rem;
     background-color: rgb(26, 161, 245);
@@ -64,4 +74,44 @@ html, body {
     width: 3rem;
     background-color: rgb(33, 147, 185);
     border: .2rem solid gray;
+}
+
+.missed-shot {
+    background-color: rgb(77, 77, 77);
+}
+
+.ship-hit {
+    background-color: rgb(255, 77, 77);
+}
+
+.marked-tile {
+    background-color: rgb(255, 255, 255);
+}
+
+.marked-tile-wrong {
+    background-color: rgb(255, 119, 119);
+}
+
+.selected-mark-tile {
+    background-color: rgb(77, 255, 80);
+}
+
+.destroyer {
+    background-color: rgb(210, 86, 37);
+}
+
+.submarine {
+    background-color: rgb(46, 190, 216);
+}
+
+.cruiser {
+    background-color: rgb(166, 196, 196);
+}
+
+.battleship {
+    background-color: rgb(75, 63, 63);
+}
+
+.carrier {
+    background-color: rgb(38, 47, 76);
 }

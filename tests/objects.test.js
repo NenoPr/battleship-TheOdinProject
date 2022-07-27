@@ -35,7 +35,7 @@ describe("Test the gameBoard and its functions.", () => {
         expect(testBoard.placeShips([10,11,12,13,14])).toEqual(newShip)
     })
     test("Test if receiveAttack() registers a hit.", () => {
-        expect(testBoard.receiveAttack(10)).toEqual(`A destroyer has been hit at coordinate 10!`)
+        expect(testBoard.receiveAttack(10)).toEqual(true) // `A destroyer has been hit at coordinate 10!`
     })
     test("Test if receiveAttack() registers a missed shot.", () => {
         expect(testBoard.receiveAttack(99)).toEqual("A miss at coordinate 99 map value is now 0!")
