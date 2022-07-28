@@ -1,12 +1,12 @@
 import { populateDOMwithPlayArea, playerTurn, playerPopulateShips } from './DOMcode.js'
 import { shipFactory, gameBoard, Player } from './objects.js'
 
-function mainGameLoop() {
+async function mainGameLoop() {
 
     let player1 = createPlayers("Player 1")
     let player2 = createPlayers("Player 2")
 
-    player2 = playerPopulateShips(player1, player2)
+    player2 = await playerPopulateShips(player1, player2)
 
 
 
@@ -34,6 +34,19 @@ function initializeGame (player1, player2) {
     player2.playerGameBoard.placeShips("destroyer",[0,0], true)
     player2.playerGameBoard.placeShips("submarine",[0,0], true)
     console.log("player2",player2)
+
+    for (let i = 1; i < 101; i++) {
+        console.log("AI LOCATION",player2.playerGameBoard.gameMap[i-1])
+        if ( i === player2.playerGameBoard.gameMap[i-1]) {
+            let parent = document.getElementById(`player-2-map`)
+            parent.childNodes.forEach( element => {
+                if ( Number(element.id) === player2.playerGameBoard.gameMap[i-1]) {
+                    element.classList.add("ship-location")
+                }
+            })
+            
+        }
+    }
 
     return player2
 

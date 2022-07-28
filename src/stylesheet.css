@@ -1,18 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
 
 
-
-html, body {
+html, body, p {
     padding: 0;
     margin: 0;
+    font-family: 'Sora';
+}
+
+a {
+    position: fixed;
+    bottom: 0;
+    background-color: rgb(17, 50, 66);
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-decoration: none;
+    color: gray;
 }
 
 #container {
+    position: relative;
     display: grid;
-    grid-template: auto 1fr / 1fr;
+    grid-template: auto 1fr auto / 1fr;
     gap: 4rem;
     justify-items: center;
     background-color: rgb(101, 101, 101);
-    min-height: 100vh;
+    background-image: url("../images/background.jpg");
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
 }
 
 #title-info {
@@ -23,13 +40,22 @@ html, body {
 }
 
 #title-description {
-    width: 50%;
+    width: 60%;
     text-align: center;
 }
 
 #title {
     font-size: 3rem;
     font-weight: 900;
+}
+
+#hints-info {
+    font-size: 2rem;
+}
+
+#hints {
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 #game-container {
@@ -46,6 +72,9 @@ html, body {
     height: fit-content;
     width: fit-content;
     gap: .2rem;
+    border: .2rem solid rgba(58, 88, 92, 0.5);
+    background-color: rgba(58, 88, 92, 0.5);
+    border-radius: .5rem;
 }
 
 .remove-events {
@@ -58,7 +87,9 @@ html, body {
 
 #separator {
     width: 3rem;
-    background-color: rgb(26, 161, 245);
+    background-color: rgba(29, 54, 69, 0.8);
+    border: .2rem solid rgb(29, 54, 69);
+    border-radius: .5rem;
 }
 
 #player-2-map {
@@ -66,22 +97,33 @@ html, body {
     grid-template: repeat(10, auto) / repeat(10, auto);
     height: fit-content;
     width: fit-content;
+    border: .2rem solid rgba(58, 88, 92, 0.5);
+    background-color: rgba(58, 88, 92, 0.5);
+    border-radius: .5rem;
     gap: .2rem;
 }
 
 .game-hit-box {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    flex-direction: column;
     height: 3rem;
     width: 3rem;
-    background-color: rgb(33, 147, 185);
-    border: .2rem solid gray;
+    text-align: center;
+    background-color: rgb(7, 87, 127);
+    border: .2rem solid rgba(255, 255, 255, 0.5);
+    border-radius: .5rem;
+}
+
+.game-hit-box:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .missed-shot {
-    background-color: rgb(77, 77, 77);
-}
-
-.ship-hit {
-    background-color: rgb(255, 77, 77);
+    background-color: rgb(255, 255, 255);
 }
 
 .marked-tile {
@@ -93,25 +135,95 @@ html, body {
 }
 
 .selected-mark-tile {
-    background-color: rgb(77, 255, 80);
+    background-color: rgb(43, 193, 46);
 }
 
-.destroyer {
-    background-color: rgb(210, 86, 37);
+.ship-location {
+    border: .2rem solid rgb(0, 0, 0);
 }
 
 .submarine {
-    background-color: rgb(46, 190, 216);
+    background-color: rgba(10, 47, 80, 0.8);
+    color: white;
+}
+
+.destroyer {
+    background-color: rgba(125, 125, 125, 0.8);
+    color: white;
+
 }
 
 .cruiser {
-    background-color: rgb(166, 196, 196);
+    background-color: rgba(44, 168, 168, 0.8);
+    color: white;
 }
 
 .battleship {
-    background-color: rgb(75, 63, 63);
+    background-color: rgba(24, 79, 206, 0.8);
+    color: white;
 }
 
 .carrier {
-    background-color: rgb(38, 47, 76);
+    background-color: rgba(35, 25, 151, 0.8);
+    color: white;
+}
+
+.ship-hit {
+    background-color: rgb(255, 77, 77);
+    border: .2rem solid black;
+    color: white;
+}
+
+#game-end {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    padding: 1rem;
+    gap: 2rem;
+    width: 30%;
+    height: 25%;
+    top: 5%;
+    left: 35%;
+    background-color: rgb(255, 255, 255);
+    border-radius: .5rem;
+    z-index: 99;
+    box-shadow: 0 0 .5rem .1rem gray;
+}
+
+#winner-text {
+    font-size: 2rem;
+}
+
+.no-display {
+    visibility: hidden;
+}
+
+#continue-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: fit-content;
+}
+
+#continue-yes {
+    border-radius: .5rem;
+    border: .2rem solid rgb(65, 115, 172);
+    background-color: rgb(65, 115, 172);
+    color: white;
+    padding: 1rem;
+    width: 100%;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+@media (width: 2560px) {
+    #game-end {
+        width: 20%;
+        height: 17%;
+        top: 5%;
+        left: 40%;
+    }
 }

@@ -12,19 +12,28 @@
 </head>
 <body>
 
+    
     <div id="container">
         <div id="title-info">
             <div id="title">BATTLESHIPS</div>
-            <div id="title-description"> Play against the opponent where you place your ships on the board and the enemy player has to hit your ships to sink them while you need to hit their ships to sink them. The first to sink all ships wins!</div>
+            <div id="title-description"> Play against the opponent where you place your ships on the board and the enemy player has to hit your ships to sink them. While you need to hit their ships to sink them. <br> The first to sink all ships wins!</div>
             <div id="hints-info"></div>
             <div id="hints"></div>
         </div>
         <div id="game-container">
             <div id="player-1-map"></div>
-            <div id="separator"></div>
-            <div id="player-2-map" class="players-turn"></div>
+            <div id="separator" class="no-display"></div>
+            <div id="player-2-map" class="players-turn no-display"></div>
+        </div>
+        <div id="game-end" class="no-display">
+            <p id="winner-text"></p>
+            <p>Do you want to play again?</p>
+            <div id="continue-buttons">
+                <button id="continue-yes">Play Again</button>
+            </div>
         </div>
     </div>
-    
+
+    <!-- <a href='https://www.freepik.com/vectors/metal-sheet'>Metal sheet vector created by upklyak - www.freepik.com</a> -->
 </body>
 </html>
