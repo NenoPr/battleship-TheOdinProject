@@ -251,9 +251,9 @@ const Player = {
     }
 }
 
-try {
-    module.exports = { shipFactory, gameBoard, Player }
-} catch (error) {}
+// try {
+//     module.exports = { shipFactory, gameBoard, Player }
+// } catch (error) {}
 
 export {shipFactory, gameBoard, Player }
 

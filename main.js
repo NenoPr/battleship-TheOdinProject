@@ -1,12 +1,12 @@
 import { populateDOMwithPlayArea, playerTurn, playerPopulateShips } from './DOMcode.js'
 import { shipFactory, gameBoard, Player } from './objects.js'
 
-async function mainGameLoop() {
+function mainGameLoop() {
 
     let player1 = createPlayers("Player 1")
     let player2 = createPlayers("Player 2")
 
-    player2 = await playerPopulateShips(player1, player2)
+    player2 = playerPopulateShips(player1, player2)
 
 
 
