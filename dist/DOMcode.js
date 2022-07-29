@@ -75,7 +75,7 @@ function populateDOMwithPlayArea(document, player1, player2) {
             missed.classList.add("miss")
             node.target.appendChild(missed)
         }
-        player1.playerPlayMove(node.target.id - 1)
+        player1.playerPlayMove(Number(node.target.id - 1))
         console.log(player1.playerGameBoard.allShipsSunk())
         node.target.removeEventListener("click", addAndRemoveHitEventListeners1)
         if (player1.playerGameBoard.allShipsSunk()) {
@@ -89,6 +89,7 @@ function populateDOMwithPlayArea(document, player1, player2) {
         reportDestroyedShips(false)
         playerTurn()
         console.log(player1.playerGameBoard)
+        if (player1.playerGameBoard.gameMap.length > 100) console.log("------------------------------------------------------------------------")
     }
 
     let destroyedShipsPlayer1 = [];
@@ -204,7 +205,7 @@ function populateDOMwithPlayArea(document, player1, player2) {
         }
 
         console.log(player2.playerGameBoard.allShipsSunk())
-        player2.playerPlayMove(node.target.id - 1)
+        player2.playerPlayMove(Number(node.target.id - 1))
         node.target.removeEventListener("click", addAndRemoveHitEventListeners2)
         if (player2.playerGameBoard.allShipsSunk()) {
             console.log("All ships have been sunk! Player 1 Wins!")
@@ -214,6 +215,7 @@ function populateDOMwithPlayArea(document, player1, player2) {
             newDiv.classList.remove("no-display")
             newDiv.firstElementChild.innerHTML= "All ships have been sunk! <br> <strong>The Victory is yours Admiral!</strong>"
         }
+        console.log(player2.playerGameBoard.gameMap[1],"------------------------------------------------------------------------")
         reportDestroyedShips(true)
         playerTurn()
         document.getElementById(`${validMovesLeftArrayAI[0]}`).click()
@@ -226,6 +228,8 @@ function populateDOMwithPlayArea(document, player1, player2) {
         //     } catch (error) {console.log("Rolling random Strike Again.")}
         // } while (true)
         console.log(player2.playerGameBoard)
+        if (player2.playerGameBoard.gameMap.length > 100) console.log("------------------------------------------------------------------------")
+
     }
 
     document.getElementById("continue-yes").addEventListener("click", () => {
