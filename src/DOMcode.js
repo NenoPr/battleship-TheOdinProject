@@ -61,17 +61,18 @@ function populateDOMwithPlayArea(document, player1, player2) {
     }
 
     function addAndRemoveHitEventListeners1(node) {
-        if (player1.playerGameBoard.receiveAttack(node.target.id, true)) {
+        if (player1.playerGameBoard.receiveAttack(node.target.id, false, player1)) {
             node.target.classList.add("ship-hit")
             node.target.classList.remove("ship-location")
             let hit = document.createElement("div")
             hit.innerText = "HIT!"
+            hit.classList.add("hit")
             node.target.appendChild(hit)
         } else {
             node.target.classList.add("missed-shot")
-            node.target.classList.remove("ship-location")
             let missed = document.createElement("div")
             missed.innerText = "MISS"
+            missed.classList.add("miss")
             node.target.appendChild(missed)
         }
         player1.playerPlayMove(node.target.id - 1)
@@ -85,8 +86,80 @@ function populateDOMwithPlayArea(document, player1, player2) {
             newDiv.classList.remove("no-display")
             newDiv.firstElementChild.innerHTML = "All ships have been sunk! <br> Player 2 Wins!"
         }
+        reportDestroyedShips(false)
         playerTurn()
         console.log(player1.playerGameBoard)
+    }
+
+    let destroyedShipsPlayer1 = [];
+    let destroyedShipsPlayer2 = [];
+    function reportDestroyedShips(player) {
+
+        let sunkShip = true;
+        console.log("REPORT SUNKEN SHIPS")
+        if(player) {
+            for (let i = 0;i<5;i++) {
+                sunkShip = true
+                console.log("REPORT SUNKEN SHIPS",player1.playerGameBoard.allShips[i].shipLength)
+                player1.playerGameBoard.allShips[i].shipLength.every( tile => {
+                    if (tile !== -2) {
+                        sunkShip = false
+                        return false
+                    }
+                    else return true
+                })
+
+                if (sunkShip) {
+                    if (destroyedShipsPlayer1[0] === undefined ) {
+                        destroyedShipsPlayer1[0] = player1.playerGameBoard.allShips[i].shipType
+                        console.log(destroyedShipsPlayer1[0])
+                        sunkShip = true
+                        document.getElementById("hints").innerHTML = `Our <strong>${player1.playerGameBoard.allShips[i].shipType.toUpperCase()}</strong> has been destroyed!!`
+                        continue
+                    }
+
+                    let foundShip = player1.playerGameBoard.allShips[i].shipType
+                    if (destroyedShipsPlayer1.find(ship => ship === foundShip) !== undefined) {
+                        sunkShip = true
+                    } else {
+                        destroyedShipsPlayer1.push(foundShip)
+                        document.getElementById("hints").innerHTML = `Our <strong>${player1.playerGameBoard.allShips[i].shipType.toUpperCase()}</strong> has been destroyed!!`
+                        sunkShip = true
+                    }
+                }
+            }
+        } else {
+            for (let i = 0;i<5;i++) {
+                sunkShip = true
+                console.log("REPORT SUNKEN SHIPS",player2.playerGameBoard.allShips[i].shipLength)
+                player2.playerGameBoard.allShips[i].shipLength.every( tile => {
+                    if (tile !== -2) {
+                        sunkShip = false
+                        return false
+                    }
+                    else return true
+                })
+
+                if (sunkShip) {
+                    if (destroyedShipsPlayer2[0] === undefined ) {
+                        destroyedShipsPlayer2[0] = player2.playerGameBoard.allShips[i].shipType
+                        console.log(destroyedShipsPlayer2[0])
+                        sunkShip = true
+                        document.getElementById("hints").innerHTML = `We have sunk their <strong>${player2.playerGameBoard.allShips[i].shipType.toUpperCase()}!</strong>`
+                        continue
+                    }
+
+                    let foundShip = player2.playerGameBoard.allShips[i].shipType
+                    if (destroyedShipsPlayer2.find(ship => ship === foundShip) !== undefined) {
+                        sunkShip = true
+                    } else {
+                        destroyedShipsPlayer2.push(foundShip)
+                        document.getElementById("hints").innerHTML = `We have sunk their <strong>${player2.playerGameBoard.allShips[i].shipType.toUpperCase()}!</strong>`
+                        sunkShip = true
+                    }
+                }
+            }
+        }
     }
 
     let validMovesLeftArrayAI = Array.from({length: 100}, (_,i) => i+1)
@@ -115,15 +188,17 @@ function populateDOMwithPlayArea(document, player1, player2) {
 
 
     function addAndRemoveHitEventListeners2(node) {
-        if (player2.playerGameBoard.receiveAttack(node.target.id)) {
+        if (player2.playerGameBoard.receiveAttack(node.target.id, true, player2)) {
             node.target.classList.add("ship-hit")
             let hit = document.createElement("div")
             hit.innerText = "HIT!"
+            hit.classList.add("hit")
             node.target.appendChild(hit)
         } else {
             node.target.classList.add("missed-shot")
             let missed = document.createElement("div")
             missed.innerText = "MISS"
+            missed.classList.add("miss")
             node.target.appendChild(missed)
             console.log("MISSED SHOT 2nd MAP")
         }
@@ -137,8 +212,9 @@ function populateDOMwithPlayArea(document, player1, player2) {
             container.classList.add("remove-events")
             let newDiv = document.getElementById("game-end")
             newDiv.classList.remove("no-display")
-            newDiv.firstElementChild.innerHTML= "All ships have been sunk! <br> Player 1 Wins!"
+            newDiv.firstElementChild.innerHTML= "All ships have been sunk! <br> <strong>The Victory is yours Admiral!</strong>"
         }
+        reportDestroyedShips(true)
         playerTurn()
         document.getElementById(`${validMovesLeftArrayAI[0]}`).click()
         validMovesLeftArrayAI.shift()

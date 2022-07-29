@@ -56,6 +56,8 @@ a {
 #hints {
     font-size: 1.5rem;
     text-align: center;
+    height: 3rem;
+    transition: all 1s;
 }
 
 #game-container {
@@ -119,7 +121,22 @@ a {
 
 .game-hit-box:hover {
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.7);
+}
+
+#player-2-map > .game-hit-box:hover {
+    cursor: crosshair;
+    background-color: rgba(202, 82, 82, 0.7);
+    border: .2rem solid red;
+}
+
+#player-2-map > .ship-hit:hover {
+    background-color: rgb(255, 77, 77);
+    border: .2rem solid black;
+}
+
+#player-2-map > .missed-shot:hover {
+    background-color: rgb(255, 255, 255);
+    border: .2rem solid black;
 }
 
 .missed-shot {
@@ -139,7 +156,7 @@ a {
 }
 
 .ship-location {
-    border: .2rem solid rgb(0, 0, 0);
+    /* border: .2rem solid rgb(0, 0, 0); */
 }
 
 .submarine {

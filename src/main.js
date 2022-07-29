@@ -35,6 +35,7 @@ function initializeGame (player1, player2) {
     player2.playerGameBoard.placeShips("submarine",[0,0], true)
     console.log("player2",player2)
 
+    // HIGHLIGHTS THE ENEMY SHIPS ON THE MAP
     for (let i = 1; i < 101; i++) {
         console.log("AI LOCATION",player2.playerGameBoard.gameMap[i-1])
         if ( i === player2.playerGameBoard.gameMap[i-1]) {

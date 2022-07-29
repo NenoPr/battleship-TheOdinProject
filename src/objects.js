@@ -48,8 +48,9 @@ const gameBoard = {
                 do {
                     location = randomLoc()
                     fits = true
-                    location2 = Math.floor(Math.random() * 10) + location
+                    location2 = Math.floor(Math.random(1,10) * 10) + location
                     if (location2 + shipSize <= location+10) {
+                        if(location2 % 10 === 0) fits = false
                         for (let i = 0; i < shipSize; i++) {
                             if (this.playerGameBoard.gameMap[location2 - 1 + i] !== -1){
                                 fits = false
@@ -144,15 +145,15 @@ const gameBoard = {
         return newShip;
     },
 
-    receiveAttack: function(attackCords, ai) {
+    receiveAttack: function(attackCords, ai, player) {
         let hitShip;
 
         if (ai) {
-            console.log("gamemap attackcords AI",this.gameMap[attackCords - 1])
+            console.log("gamemap attackcords AI",player.playerGameBoard.gameMap[attackCords - 1])
             console.log("attackcords AI",attackCords)
-            if(this.gameMap[attackCords - 1] === Number(attackCords)) {
+            if(player.playerGameBoard.gameMap[attackCords - 1] === Number(attackCords)) {
                 console.log("INSIDE")
-                this.allShips.every(ship => {
+                player.playerGameBoard.allShips.every(ship => {
                     console.log(ship)
                     for (let i = 0; i < ship.shipLength.length;i++) {
                         if (ship.shipLength[i] === Number(attackCords)) {
@@ -166,14 +167,14 @@ const gameBoard = {
                 })
                 console.log("RETURNS TRUE")
                 return true //`A ${hitShip} has been hit at coordinate ${attackCords}!`
-            } else this.gameMap[attackCords] = 0; return false //`A miss at coordinate ${attackCords} map value is now ${this.gameMap[attackCords]}!`;
+            } else player.playerGameBoard.gameMap[Number(attackCords)] = 0; return false //`A miss at coordinate ${attackCords} map value is now ${this.gameMap[attackCords]}!`;
         }
         
-        console.log("gamemap attackcords",this.gameMap[attackCords - 1])
+        console.log("gamemap attackcords",player.playerGameBoard.gameMap[attackCords - 1])
         console.log("attackcords",attackCords)
-        if(this.gameMap[attackCords - 1] === Number(attackCords)) {
+        if(player.playerGameBoard.gameMap[attackCords - 1] === Number(attackCords)) {
             console.log("INSIDE")
-            this.allShips.every(ship => {
+            player.playerGameBoard.allShips.every(ship => {
                 console.log(ship)
                 for (let i = 0; i < ship.shipLength.length;i++) {
                     if (ship.shipLength[i] === Number(attackCords)) {
@@ -187,7 +188,7 @@ const gameBoard = {
             })
             console.log("RETURNS TRUE")
             return true //`A ${hitShip} has been hit at coordinate ${attackCords}!`
-        } else this.gameMap[attackCords] = 0; return false //`A miss at coordinate ${attackCords} map value is now ${this.gameMap[attackCords]}!`;
+        } else player.playerGameBoard.gameMap[Number(attackCords)] = 0; return false //`A miss at coordinate ${attackCords} map value is now ${this.gameMap[attackCords]}!`;
     },
 
     allShipsSunk: function() {
