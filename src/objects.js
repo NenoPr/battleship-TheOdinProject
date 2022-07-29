@@ -167,7 +167,7 @@ const gameBoard = {
                 })
                 console.log("RETURNS TRUE")
                 return true //`A ${hitShip} has been hit at coordinate ${attackCords}!`
-            } else player.playerGameBoard.gameMap[Number(attackCords)] = 0; return false //`A miss at coordinate ${attackCords} map value is now ${this.gameMap[attackCords]}!`;
+            } else return false //`A miss at coordinate ${attackCords} map value is now ${this.gameMap[attackCords]}!`;
         }
         
         console.log("gamemap attackcords",player.playerGameBoard.gameMap[attackCords - 1])
@@ -188,7 +188,7 @@ const gameBoard = {
             })
             console.log("RETURNS TRUE")
             return true //`A ${hitShip} has been hit at coordinate ${attackCords}!`
-        } else player.playerGameBoard.gameMap[Number(attackCords)] = 0; return false //`A miss at coordinate ${attackCords} map value is now ${this.gameMap[attackCords]}!`;
+        } else return false //`A miss at coordinate ${attackCords} map value is now ${this.gameMap[attackCords]}!`;
     },
 
     allShipsSunk: function() {
@@ -251,9 +251,9 @@ const Player = {
     }
 }
 
-try {
-    module.exports = { shipFactory, gameBoard, Player }
-} catch (error) {}
+// try {
+//     module.exports = { shipFactory, gameBoard, Player }
+// } catch (error) {}
 
 export {shipFactory, gameBoard, Player }
 

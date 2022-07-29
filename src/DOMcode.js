@@ -234,7 +234,7 @@ function populateDOMwithPlayArea(document, player1, player2) {
 
 }
 
-async function playerPopulateShips(player1, player2) {
+function playerPopulateShips(player1, player2) {
     let player1Map = document.getElementById("player-1-map");
     let insertDiv;
     let wheelPosition = "horizontal";

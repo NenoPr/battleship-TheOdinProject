@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The Battleship project from The Odin Project.",
   "private": false,
+  "type": "module",
   "scripts": {
     "test": "jest --env=jsdom"
   },
