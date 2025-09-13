@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-# battleship-TheOdinProject
-The Battleship project from The Odin Project.
-
-Site Link: https://nenopr.github.io/battleship-TheOdinProject/
-=======
 ## 📌 Overview
 A classic Battleship game. Place your ships and sink your enemies ships before they sink yours.
 
@@ -23,4 +17,3 @@ A classic Battleship game. Place your ships and sink your enemies ships before t
 
 ## 🔗 Live Demo
 [Demo Link](https://nenopr.github.io/battleship-TheOdinProject/)
->>>>>>> f434dd0 (Updated README and added images for it)
