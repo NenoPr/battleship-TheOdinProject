@@ -1,12 +1,13 @@
 import { initializeGame } from './main.js'
 
-
+// Creates the maps for the game where you play
 function populateDOMwithPlayArea(document, player1, player2) {
 
     let player1Map = document.getElementById("player-1-map")
     let player2Map = document.getElementById("player-2-map")
     let insertDiv;
 
+    // Creates tiles for player1 and adds the event Listeners on every tile for game logic
     for (let i = 1; i < 101; i++) {
         insertDiv = document.createElement("div")
         insertDiv.id = i
@@ -18,6 +19,7 @@ function populateDOMwithPlayArea(document, player1, player2) {
         player1Map.appendChild(insertDiv)
     }
 
+    // Saves the initial first part of a ships location (exp. carrier has 5 parts)
     let carrierLoc = player1.playerGameBoard.allShips[0].shipLength
     let battleshipLoc = player1.playerGameBoard.allShips[1].shipLength
     let cruiserLoc = player1.playerGameBoard.allShips[2].shipLength
@@ -26,6 +28,8 @@ function populateDOMwithPlayArea(document, player1, player2) {
     console.log("Ships initial locations:",carrierLoc,battleshipLoc,cruiserLoc,destroyerLoc,submarineLoc)
     console.log(carrierLoc[0])
 
+    // Inserts the text defining the ship type and its number part, 
+    // as well as add  a css class for styling like colors to differentiate them
     for (let i = 0; i < carrierLoc.length; i++) {
         console.log(carrierLoc[i])
         document.getElementById(`${carrierLoc[i]}`).classList.add("carrier")
@@ -52,6 +56,7 @@ function populateDOMwithPlayArea(document, player1, player2) {
         document.getElementById(`${submarineLoc[i]}`).innerText = `S${i+1}`
     }
 
+    // Creates the player 2 map and adds the event Listeners on every tile for game logic
     for (let i = 1; i < 101; i++) {
         insertDiv = document.createElement("div")
         insertDiv.id = i
@@ -60,6 +65,9 @@ function populateDOMwithPlayArea(document, player1, player2) {
         player2Map.appendChild(insertDiv)
     }
 
+    // Checks if tile has ship part on it, registers it as a hit or miss, 
+    // checks for win condition, checks if a ship has sunk and toggles the player turns
+    // this one is all from player 1 perspective triggers when player two takes a shot
     function addAndRemoveHitEventListeners1(node) {
         if (player1.playerGameBoard.receiveAttack(node.target.id, false, player1)) {
             node.target.classList.add("ship-hit")
@@ -91,8 +99,10 @@ function populateDOMwithPlayArea(document, player1, player2) {
         console.log(player1.playerGameBoard)
     }
 
+    // Creates an array to store destroyed ships
     let destroyedShipsPlayer1 = [];
     let destroyedShipsPlayer2 = [];
+    // checks if a ship has been destroyed if it has pushes it on to an array and updates DOM to inform player
     function reportDestroyedShips(player) {
 
         let sunkShip = true;
@@ -162,9 +172,12 @@ function populateDOMwithPlayArea(document, player1, player2) {
         }
     }
 
+    // Creates an array of the same length as a players map
+    // This determines the computers moves
     let validMovesLeftArrayAI = Array.from({length: 100}, (_,i) => i+1)
     console.log("Before Shuffle: ",validMovesLeftArrayAI)
 
+    // Shuffle the array so the computer will take random unique shots when it is its turn
     function shuffleArray(array) {
         let currentIndex = array.length,  randomIndex;
       
@@ -183,10 +196,15 @@ function populateDOMwithPlayArea(document, player1, player2) {
         return array;
     }
 
+    // Shuffle the computer moves array
     shuffleArray(validMovesLeftArrayAI)
     console.log("After Shuffle: ",validMovesLeftArrayAI)
 
-
+    // Checks if tile has ship part on it, registers it as a hit or miss, 
+    // checks for win condition, checks if a ship has sunk and toggles the player turns
+    // This is where computer takes a shot from its array of moves
+    // and unshift's the first element of the array after the move
+    // this one is all from player 2 perspective triggers when player one takes a shot
     function addAndRemoveHitEventListeners2(node) {
         if (player2.playerGameBoard.receiveAttack(node.target.id, true, player2)) {
             node.target.classList.add("ship-hit")
@@ -228,22 +246,27 @@ function populateDOMwithPlayArea(document, player1, player2) {
         console.log(player2.playerGameBoard)
     }
 
+    // When the game finishes a pre build html element becomes visible and prompts to play Again
+    // If yes the page reloads
     document.getElementById("continue-yes").addEventListener("click", () => {
         location.reload();
     })
 
 }
 
+// This function handles the players positioning of ships before the game
 function playerPopulateShips(player1, player2) {
     let player1Map = document.getElementById("player-1-map");
     let insertDiv;
     let wheelPosition = "horizontal";
     let shipsSet = 0;
 
+    // Adds an event listener where you can use the mouse wheel to rotate the ships for placing on the map
     window.addEventListener("wheel", wheelPositionChange)
     document.getElementById("hints-info").innerText = "Use the mouse wheel to change orientation."
     document.getElementById("hints").innerHTML = "Currently placing in the <strong>horizontal</strong> direction."
 
+    // Defines the mouse wheel event listener's function
     function wheelPositionChange() {
         if (wheelPosition === "vertical") {
             wheelPosition = "horizontal"
@@ -253,6 +276,7 @@ function playerPopulateShips(player1, player2) {
             document.getElementById("hints").innerHTML = "Currently placing in the <strong>vertical</strong> direction."
         }
 
+        // Removes marked tiles that get activated from a placing function so that the map is cleaned from styling
         document.querySelector("#player-1-map").childNodes.forEach( node => {
             node.classList.remove("marked-tile")
             if(node.id % 10 === 0) {
@@ -264,6 +288,7 @@ function playerPopulateShips(player1, player2) {
         console.log(wheelPosition)
     }
 
+    // Creates the map for placing the ships
     for (let i = 1; i < 101; i++) {
         insertDiv = document.createElement("div")
         insertDiv.id = i
@@ -271,11 +296,16 @@ function playerPopulateShips(player1, player2) {
         insertDiv.addEventListener("mouseover", highlightAreasEnter)
         insertDiv.addEventListener("mouseleave", highlightAreasLeave)
         insertDiv.classList.add("game-hit-box", "player-1")
+        // Disables placing on every tenth tile
+        // only for horizontal so it doesn't affect or diminish possible placements
         if(i % 10 === 0) insertDiv.classList.add("remove-events")
         player1Map.appendChild(insertDiv)
     }
 
     // ---- PLACE THE HIGHLIGHTS ----
+    // This function highlights the placement of the entire ship on the board
+    // The first one places the highlights for horizontal placement based on ship type (size) shoved by shipSet variable
+    // The shipset variable is updated in the placeShipLocation() function below
     function highlightAreasEnter(node) {
         if (wheelPosition === "horizontal") {
             if (shipsSet === 0) {
@@ -389,6 +419,7 @@ function playerPopulateShips(player1, player2) {
                     }
                 }
             }
+        // This next one places them based on the vertical position
         } else {
             if (shipsSet === 0) {
                 let nodeLocation = Number(node.target.id)
@@ -491,6 +522,7 @@ function playerPopulateShips(player1, player2) {
                     }
                     console.log("hover event inside2")
                 } else {
+                    // Highlights the wrong placement
                     for (let i = nodeLocation;i<=tens;i++) {
                         document.getElementById(`${i}`).classList.add("marked-tile-wrong")
                     }
@@ -500,6 +532,8 @@ function playerPopulateShips(player1, player2) {
         
     }
 
+    // This function deletes the styling classes when the mouse leaves the current node
+    // from highlightAreasEnter()
     function highlightAreasLeave(node) {
         let nodeLocation = Number(node.target.id)
         try {
@@ -519,13 +553,15 @@ function playerPopulateShips(player1, player2) {
         
     }
 
+    // This function places ships from the player ship positioning on a tile after it was clicked
     function placeShipLocation(node) {
         let startingCord = Number(node.target.id)
 
         console.log("startingCord",startingCord)
         console.log(player1.playerGameBoard)
 
-
+        // This sets the ships positions during ship placements
+        // Removes the event listeners from the tiles and saves the positions in player1 gameMap
         if (shipsSet === 0) {
             if (player1.playerGameBoard.placeShips("carrier",[startingCord,0,0,0,0], false, wheelPosition)) {
                 let positions = player1.playerGameBoard.allShips[0].shipLength
@@ -597,11 +633,14 @@ function playerPopulateShips(player1, player2) {
                 
                 // PREPARE THE GAME
 
+                // Change the hint element with new text
+                // It was displaying sjip positioning information
                 window.removeEventListener("wheel", wheelPositionChange)
                 document.getElementById("hints-info").innerText = "BATTLE!"
                 document.getElementById("hints").innerHTML= "All hands on deck!<br> Your Orders Admiral!"
 
-
+                // Deletes the ship positioning map
+                // Creates anew map and renders it with the data from player1 gameMap for ship locations
                 document.getElementById("player-1-map").remove()
                 let newPlayer1Map = document.createElement("div")
                 newPlayer1Map.id = "player-1-map"
@@ -617,6 +656,7 @@ function playerPopulateShips(player1, player2) {
     }
 }
 
+// Toggles the player turns by disabling the event listeners with a css class
 function playerTurn() {
     document.getElementById("player-1-map").classList.toggle("players-turn")
     document.getElementById("player-2-map").classList.toggle("players-turn")

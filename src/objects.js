@@ -1,5 +1,5 @@
 
-
+// The ship object used to check if a ship was hit an if its sunk
 const Ship = {
     shipType: "",
     shipLength: [],
@@ -17,6 +17,7 @@ const Ship = {
     },
 }
 
+// Creates a new unique ship
 function shipFactory(shipType, shipsLength) {
 
     let newShip = Object.create(Ship)
@@ -26,10 +27,13 @@ function shipFactory(shipType, shipsLength) {
     return newShip
 }
 
+// Holds many game functions
 const gameBoard = {
 
+    // Places the ships ont the gameMap and checks if they are valid placements
     placeShips: function(shipType, cordsToPlace, ai, wheelPosition) {
         
+        // this is for placing ai ships
         if (ai) {
             function randomLoc() { 
                 let holder = Math.floor(Math.random() * (100 - 1) + 1)
@@ -44,6 +48,7 @@ const gameBoard = {
             let newCords = []
             let fits = true
 
+            // Check if the supplied placement is valid for horizontal placing
             if (orientation === 0) {
                 do {
                     location = randomLoc()
@@ -88,6 +93,7 @@ const gameBoard = {
             return newShip;
         } else {
 
+            // places the ships for the player and checks if a position is valid with its orientation and size
             let shipSize = cordsToPlace.length
             let newCords = []
             let fits = true
@@ -145,6 +151,7 @@ const gameBoard = {
         return newShip;
     },
 
+    // Check wether the attack was a hit or miss based of the players gameMap
     receiveAttack: function(attackCords, ai, player) {
         let hitShip;
 
@@ -191,6 +198,7 @@ const gameBoard = {
         } else return false //`A miss at coordinate ${attackCords} map value is now ${this.gameMap[attackCords]}!`;
     },
 
+    // Checks if all ships have been sunk which signifies the game end
     allShipsSunk: function() {
 
         if ( this.allShips.every(ship => {
@@ -205,19 +213,25 @@ const gameBoard = {
     },
 }
 
+// The player's object the highest object oin the chain
 const Player = {
 
     playersShips: [],
 
+    // Updates the players 2 gameMap after the opposing players attack
+    // Probably not used anymore
     aiPlayMove: function() {
         let moveToPlay;
         let fullMap = true;
+        // Check if the map is full of hits or misses
+        // This part is deprecated and does not do anything
         for (let i = 0; i < this.playerGameBoard.gameMap.length; i++) {
             if (this.playerGameBoard.gameMap[i] === -1) {
                 fullMap = false;
                 break;
             }
         }
+        // Populates map with zeros for missed shots
         if (!fullMap) {
             do {
                 moveToPlay = Math.floor(Math.random()*100)
@@ -231,6 +245,7 @@ const Player = {
         return ("No valid moves left! Played " + moveToPlay)
     },
 
+    // The same function as above but it also check for ship hits
     playerPlayMove: function(moveToPlay) {
         let fullMap = true;
         for (let i = 0; i < this.playerGameBoard.gameMap.length; i++) {
@@ -239,6 +254,7 @@ const Player = {
                 break;
             }
         }
+        // Checks if the move was a miss or hit and updates the gameMap accordingly
         if (!fullMap) {
             if (this.playerGameBoard.gameMap[moveToPlay] === -1) {
                 this.playerGameBoard.gameMap[moveToPlay] = 0;
@@ -251,6 +267,7 @@ const Player = {
     }
 }
 
+// Code for testing uncomment to test
 // try {
 //     module.exports = { shipFactory, gameBoard, Player }
 // } catch (error) {}
@@ -260,7 +277,7 @@ export {shipFactory, gameBoard, Player }
 
 
 
-
+// Code that is no longer Used
 // console.log(gameBoard.gameMap)
 // for (let i = 0; i < gameBoard.gameMap.length; i++) {
 //     gameBoard.gameMap[i] = 0

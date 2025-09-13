@@ -147,10 +147,6 @@ a {
     background-color: rgb(255, 255, 255);
 }
 
-.marked-tile-wrong {
-    background-color: rgb(255, 119, 119);
-}
-
 .selected-mark-tile {
     background-color: rgb(43, 193, 46);
 }
@@ -189,6 +185,10 @@ a {
     background-color: rgb(255, 77, 77);
     border: .2rem solid black;
     color: white;
+}
+
+.marked-tile-wrong {
+    background-color: rgb(255, 119, 119);
 }
 
 #game-end {

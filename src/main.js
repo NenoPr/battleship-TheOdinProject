@@ -12,6 +12,7 @@ function mainGameLoop() {
 
 }
 
+// Creates the players as its own separate unique objects
 function createPlayers(newPlayerName) {
     let newPlayer = { ...Player}
     newPlayer.name = newPlayerName
@@ -24,6 +25,7 @@ function createPlayers(newPlayerName) {
     return newPlayer
 }
 
+// Initializes computers ship placements
 function initializeGame (player1, player2) {
 
     populateDOMwithPlayArea(document, player1, player2)
